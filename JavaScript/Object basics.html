@@ -6,10 +6,14 @@
   </head>
 
   <body>
-    <p>This example requires you to enter commands in your browser's JavaScript console (see <a href="https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_are_browser_developer_tools">What are browser developer tools</a> for more information).</p>
+    <input type="text" id="name" name="name" value=""
+           minlength="4" maxlength="8" size="10">
+  <button id = 'button1'>submit</button>
+
+  <button id = 'button2'>btn2</button>
   </body>
 
-    <script>
+  <script>
       let person = {
         name : ['Bob', 'Smith'],
         age : 32,
@@ -26,8 +30,41 @@
           alert(`Hi! I'm ${this.name[0]}.`);
         }
       };
+
+      //用点表示法(dot notation)来访问对象的属性和方法。
+      // 对象的名字表现为一个命名空间(namespace)，它必须写在第一位——当你想访问对象内部的属性或方法时，然后是一个点(.)，
+      // 紧接着是你想要访问的项目，标识可以是简单属性的名字(name)，或者是数组属性的一个子元素，又或者是对象的方法调用。
+      //点表示法只能接受字面量的成员的名字，不接受变量作为名字。
       console.log(person);
       console.log(person.age);
       console.log(person.name[0]);
+      //另外一种访问属性的方式是使用括号表示法(bracket notation)
+      //括号表示法一个有用的地方是它不仅可以动态的去设置对象成员的值，还可以动态的去设置成员的名字。
+      console.log(person['age']);
+      console.log(person['name'][0]);
+
+      function showInput(){
+        let name = document.getElementById("name").value;
+        console.log(name);
+        let inputName = document.querySelector('input');
+        inputName.setAttribute('value',name);
+        return name;
+      };
+
+      let btn = document.getElementById('button1');
+      btn.addEventListener('click',showInput);
+
+      let myDataName = 'ts';
+      let myDataValue = '1.75m';
+      person[myDataName] = myDataValue;
+
+      function addPerson(){
+        let myDataName = 'str1';
+        let myDataValue = 'str2';
+        person[myDataName] = myDataValue;
+      };
+      let btn2 = document.getElementById('button2');
+      btn2.addEventListener('click',addPerson);
     </script>
+
 </html>
