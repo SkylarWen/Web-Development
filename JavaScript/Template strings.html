@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>examples to use a template string</title>
+</head>
+<body>
+    <p>
+        模板字符串（template string）也就是模板字面量，是增强版的字符串，用反引号（`）来表示。它既可以当作普通字符串来使用，也可以在字符串中嵌套变量。
+    </p>
+    <p>
+        在做前端开发的时候，我们经常会需要在 JavaScript 文件中书写 html 或者 css。在这种场景下，使用模板字符串是个很好的方式，这样就不需要进行复杂而丑陋的字符串拼接了。
+    </p>
+    <div></div>
+    <script>
+        let a = 1;
+        let b = 2;
+        let sum = a + b;
+        let res = a + '+' + b + '的和是' + sum;
+        console.log(res);
+        let obj = {name:'张三；',age:18};
+        let str = '姓名：'+obj.name+'年龄:'+obj.age;
+        console.log(str);
+
+        //引入模板字符串写法：
+        let Newres = `a+b的和是${sum}`;
+        let Newstr = `姓名：${obj.name}年龄：${obj.age}`;
+        console.log(Newres);
+        console.log(Newstr);
+        //${}的大括号内部可以放入任意的 JS表达式，可以进行运算，也可以引用对象属性
+        let x = 1;let y = 2;
+        let sum1 = `${x} + ${y} = ${x + y}`;
+        console.log(sum1); // 1 + 2 = 3
+        //${}的大括号内部不光可以进行运算、引用对象属性，还可以调用函数。
+        function fn() {
+            return "Hello World";
+        }
+        let callfn = `foo ${fn()} bar`;
+        console.log(callfn); // foo Hello World bar
+        // 如果在模板字符串中需要使用反引号，则前面要用反斜杠转义。
+        let sentence = `\`Yo\` World!`;
+        console.log(sentence);
+        //如果使用模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中。
+        let newTry = `<ul>
+  <li>first</li>
+ <li>second</li>
+`;
+        document.querySelector('div').innerHTML += newTry;
+    </script>
+</body>
+</html>
