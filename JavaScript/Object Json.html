@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple JSON example</title>
+    <style>
+        /* || general styles */
+
+        html {
+            font-family: 'helvetica neue', helvetica, arial, sans-serif;
+        }
+
+        body {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        h1, h2 {
+            font-family: 'Faster One', cursive;
+        }
+
+        /* header styles */
+
+        h1 {
+            font-size: 4rem;
+            text-align: center;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* section styles */
+
+        section article {
+            width: 33%;
+            float: left;
+        }
+
+        section p {
+            margin: 5px 0;
+        }
+
+        section ul {
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            letter-spacing: -5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<div>
+    <h2>JSON 是一种按照JavaScript对象语法的数据格式，这是 Douglas Crockford 推广的。虽然它是基于 JavaScript 语法，但它独立于JavaScript，这也是为什么许多程序环境能够读取（解读）和生成 JSON。 </h2>
+    <h2>JSON可以作为一个对象或者字符串存在，前者用于解读 JSON 中的数据，后者用于通过网络传输 JSON 数据。 这不是一个大事件——JavaScript 提供一个全局的 可访问的 JSON 对象来对这两种数据进行转换。</h2>
+    <ul>
+        <li>JSON 是一种纯数据格式，它只包含属性，没有方法。</li>
+        <li>JSON 要求有两头的 { } 来使其合法。最安全的写法是有两边的括号，而不是一边。</li>
+        <li>甚至一个错位的逗号或分号就可以导致  JSON 文件出错。您应该小心的检查您想使用的数据(虽然计算机生成的 JSON 很少出错，只要生成程序正常工作)。您可以通过像 JSONLint 的应用程序来检验 JSON。</li>
+        <li>JSON 可以将任何标准合法的 JSON 数据格式化保存，不只是数组和对象。比如，一个单一的字符串或者数字可以是合法的 JSON 对象。虽然不是特别有用处……</li>
+        <li>不像 JavaScript 标识符可以用作属性，在 JSON 中，只有字符串才能用作属性。</li>
+        <li>数组对象也是一种合法的 JSON 对象</li>
+    </ul>
+</div>
+
+<header>
+</header>
+
+<section>
+</section>
+
+<script>
+    const superHeroes = {
+        "squadName" : "Super hero squad",
+        "homeTown" : "Metro City",
+        "formed" : 2016,
+        "secretBase" : "Super tower",
+        "active" : true,
+        "members" : [
+            {
+                "name" : "Molecule Man",
+                "age" : 29,
+                "secretIdentity" : "Dan Jukes",
+                "powers" : [
+                    "Radiation resistance",
+                    "Turning tiny",
+                    "Radiation blast"
+                ]
+            },
+            {
+                "name" : "Madame Uppercut",
+                "age" : 39,
+                "secretIdentity" : "Jane Wilson",
+                "powers" : [
+                    "Million tonne punch",
+                    "Damage resistance",
+                    "Superhuman reflexes"
+                ]
+            },
+            {
+                "name" : "Eternal Flame",
+                "age" : 1000000,
+                "secretIdentity" : "Unknown",
+                "powers" : [
+                    "Immortality",
+                    "Heat Immunity",
+                    "Inferno",
+                    "Teleportation",
+                    "Interdimensional travel"
+                ]
+            }
+        ]
+    }
+
+    const header = document.querySelector('header');
+    const section = document.querySelector('section');
+
+    let requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
+    let request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function() {
+        let superHeroes = request.response;
+        populateHeader(superHeroes);
+        showHeroes(superHeroes);
+    }//请求对象load事件只有在请求成功时触发；这种方式可以保证事件触发时 request.response 是绝对可以访问的。
+
+    function populateHeader(jsonObj) {
+        var myH1 = document.createElement('h1');
+        myH1.textContent = jsonObj['squadName'];
+        header.appendChild(myH1);
+
+        var myPara = document.createElement('p');
+        myPara.textContent = 'Hometown: ' + jsonObj['homeTown'] + ' // Formed: ' + jsonObj['formed'];
+        header.appendChild(myPara);
+    }
+    function showHeroes(jsonObj) {
+        var heroes = jsonObj['members'];
+
+        for(i = 0; i < heroes.length; i++) {
+            var myArticle = document.createElement('article');
+            var myH2 = document.createElement('h2');
+            var myPara1 = document.createElement('p');
+            var myPara2 = document.createElement('p');
+            var myPara3 = document.createElement('p');
+            var myList = document.createElement('ul');
+
+            myH2.textContent = heroes[i].name;
+            myPara1.textContent = 'Secret identity: ' + heroes[i].secretIdentity;
+            myPara2.textContent = 'Age: ' + heroes[i].age;
+            myPara3.textContent = 'Superpowers:';
+
+            var superPowers = heroes[i].powers;
+            for(j = 0; j < superPowers.length; j++) {
+                var listItem = document.createElement('li');
+                listItem.textContent = superPowers[j];
+                myList.appendChild(listItem);
+            }
+
+            myArticle.appendChild(myH2);
+            myArticle.appendChild(myPara1);
+            myArticle.appendChild(myPara2);
+            myArticle.appendChild(myPara3);
+            myArticle.appendChild(myList);
+
+            section.appendChild(myArticle);
+        }
+    }
+</script>
+</body>
+</html>
