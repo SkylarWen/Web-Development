@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple synchronous JavaScript example</title>
+</head>
+<body>
+<div>
+    <ul>
+        <li>通常来说，程序都是顺序执行，同一时刻只会发生一件事。如果一个函数依赖于另一个函数的结果，它只能等待那个函数结束才能继续执行，从用户的角度来说，整个程序才算运行完毕.</li>
+        <li>在计算机普遍都有多核CPU的时代,你完全可以在另一个处理器内核上干其他的工作，同时计算机完成耗时任务的时候通知你.这样你可以同时完成其他工作，这就是异步编程的出发点</li>
+        <li>JavaScript一般来说是单线程的（single threaded）,会出现阻塞。</li>
+    </ul>
+</div>
+<button>Click me</button>
+<script>
+    const btn = document.querySelector('button');
+    btn.addEventListener('click', () => {
+        console.log('Start running');
+        let myDate;
+        for(let i = 0; i < 10000000; i++) {
+            let date = new Date();
+            myDate = date;
+        }
+
+        console.log(myDate);
+
+        let pElem = document.createElement('p');
+        pElem.textContent = 'This is a newly-added paragraph.';
+        document.body.appendChild(pElem);
+
+        console.log('Work done!');
+    });
+</script>
+</body>
+</html>
