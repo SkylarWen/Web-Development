@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Simple synchronous JavaScript example</title>
+</head>
+<body>
+<button>Click me</button>
+<script>
+    //Chrome doesn't let you load web workers when running scripts from a local file.
+
+    //web workers相当有用，但是他们确实也有局限。主要的一个问题是他们不能访问 DOM — 不能让一个worker直接更新UI。
+    //其次，虽然在worker里面运行的代码不会产生阻塞，但是基本上还是同步的。当一个函数依赖于几个在它之前运行的过程的结果，这就会成为问题。
+    const btn = document.querySelector('button');
+    const worker = new Worker('worker.js');
+
+    btn.addEventListener('click', () => {
+        worker.postMessage('Go!');
+
+        let pElem = document.createElement('p');
+        pElem.textContent = 'This is a newly-added paragraph.';
+        document.body.appendChild(pElem);
+    });
+
+    worker.onmessage = function(e) {
+        console.log(e.data);
+    }
+</script>
+</body>
+</html>
