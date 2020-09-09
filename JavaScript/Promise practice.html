@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript Promises In 10 Minutes</title>
+</head>
+<body>
+<script>
+    let p = new Promise(((resolve, reject) => {
+        let a = 1+1;
+        if(a === 2){
+            resolve(a)
+        }else{
+            reject('failed')
+        }
+    }));
+
+    p.then(res=>res
+    ).then((message)=>{
+        console.log('this is in the then '+ message)
+    }).catch((message)=>{
+        console.log('this is in catch '+message)
+    })
+</script>
+<script>
+    const p1 = new Promise((resolve,reject)=>{
+       resolve('video1 is ready.');
+    });
+    const p2 = new Promise((resolve,reject)=>{
+        resolve('video2 is ready.');
+    });
+    const p3 = new Promise((resolve,reject)=>{
+        resolve('video3 is ready.');
+    });
+
+    Promise.all([
+        p1,
+        p2,
+        p3
+    ]).then((messages)=>{
+        console.log(messages);
+    }).catch((e)=>{
+        console.log(e);
+    });
+
+    Promise.race([
+        p1,
+        p2,
+        p3
+    ]).then((message)=>{
+        console.log(message);
+    }).catch((e)=>{
+       console.log(e);
+    });
+    //promise all vs race:
+    //all要求所有的promise都必须resolve才能继续
+    //race则只要其中一个resolve或者reject就行
+</script>
+</body>
+</html>

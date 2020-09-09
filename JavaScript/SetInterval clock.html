@@ -30,27 +30,5 @@
     setTimeout(callback, 1000); // 1秒钟后调用callback函数
     console.log('after setTimeout()');
 </script>
-
-
-<script>
-    function hello(){
-        console.log('hi');
-    }
-
-    let promise = new Promise((resolve, reject) => {
-        console.log('1');
-        let requestURL = 'https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json';
-        let request = new XMLHttpRequest();
-        request.open('GET', requestURL);
-        request.responseType = 'json';
-        request.send();
-        let response = request.response;
-        resolve(response);
-    }).then(res=>{
-        console.log(res);
-    }).catch(()=>{
-        console.log('err');
-    });
-</script>
 </body>
 </html>
