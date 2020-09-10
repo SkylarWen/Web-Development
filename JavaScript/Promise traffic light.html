@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic lights</title>
+</head>
+<body>
+<p>
+    题目：红灯三秒亮一次，绿灯一秒亮一次，黄灯2秒亮一次；如何让三个灯不断交替重复亮灯？（用Promse实现）
+</p>
+<p>
+    三个亮灯函数已经存在：
+    function red(){
+    console.log('red');
+    }
+    function green(){
+    console.log('green');
+    }
+    function yellow(){
+    console.log('yellow');
+    }
+</p>
+<script>
+    function red(){
+        console.log('red');
+    }
+    function green(){
+        console.log('green');
+    }
+    function yellow(){
+        console.log('yellow');
+    }
+
+    function setLight(seconds, color){
+        return new Promise(((resolve, reject) => {
+            setTimeout(function(){
+                color();
+                resolve();
+            },seconds);
+        }));
+    }
+    let d = new Promise(function(resolve, reject){resolve();});
+    let step = function(def) {
+        def.then(function(){
+            return setLight(3000, red);
+        }).then(function(){
+            return setLight(1000, green);
+        }).then(function(){
+            return setLight(2000, yellow);
+        }).then(function () {
+            step(def);
+        });
+    };
+    step(d);
+
+</script>
+</body>
+</html>
